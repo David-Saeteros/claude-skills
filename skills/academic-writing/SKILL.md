@@ -1,19 +1,13 @@
 ---
 name: academic-writing
 description: >
-  Expert academic writing assistant covering any genre (journal articles, theses, grant proposals,
-  systematic reviews, book chapters). Use this skill whenever the user asks to draft, edit, improve,
-  restructure, or review academic writing — including requests like "help me write my methods section",
-  "edit this for clarity", "structure my argument", "fix my citations", "write a response to reviewers",
-  or anything involving formal scholarly text. Trigger even for partial tasks: a single paragraph to
-  polish, a reference list to check, or a rebuttal letter to calibrate. Also trigger for thesis
-  revision workflows: when the user provides supervisor feedback (as a list, PDF, or pasted comments)
-  alongside a thesis manuscript (PDF, .tex, or pasted text) and wants to know what to change, where,
-  and how. Has domain-specific checks for personality psychology and NLP research: transformer model
-  methodology (BERT, RoBERTa), XAI validity (Integrated Gradients, attribution faithfulness),
-  psychometrics (OCEAN/Big Five operationalisation, reliability, construct validity), and the
-  Pennebaker essay paradigm. Flags domain-specific issues proactively even when not explicitly asked.
-  The skill defaults to APA 7th but adapts to any style guide the user specifies.
+  Expert academic writing assistant for journal articles, theses, grant proposals, and book chapters.
+  Use when drafting, editing, structuring, fixing citations, writing reviewer responses, or reviewing
+  thesis manuscripts against supervisor feedback. Trigger for any formal scholarly text task, even
+  partial ones. Domain-specific checks for personality psychology and NLP: transformer methodology
+  (BERT, RoBERTa), XAI validity (Integrated Gradients, attribution faithfulness), psychometrics
+  (OCEAN/Big Five, reliability, construct validity, Pennebaker paradigm). Proactively flags NLP,
+  XAI, and psychometric issues even when not asked. Defaults to APA 7th; adapts to any style guide.
 ---
 
 # Academic Writing Skill
