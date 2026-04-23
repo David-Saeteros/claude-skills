@@ -9,7 +9,11 @@ description: >
   polish, a reference list to check, or a rebuttal letter to calibrate. Also trigger for thesis
   revision workflows: when the user provides supervisor feedback (as a list, PDF, or pasted comments)
   alongside a thesis manuscript (PDF, .tex, or pasted text) and wants to know what to change, where,
-  and how. The skill defaults to APA 7th but adapts to any style guide the user specifies.
+  and how. Has domain-specific checks for personality psychology and NLP research: transformer model
+  methodology (BERT, RoBERTa), XAI validity (Integrated Gradients, attribution faithfulness),
+  psychometrics (OCEAN/Big Five operationalisation, reliability, construct validity), and the
+  Pennebaker essay paradigm. Flags domain-specific issues proactively even when not explicitly asked.
+  The skill defaults to APA 7th but adapts to any style guide the user specifies.
 ---
 
 # Academic Writing Skill
@@ -91,6 +95,32 @@ Read the passage and produce a flagged report with the following categories:
 - Topic sentences that don't match paragraph content
 - Transitions that assume rather than build the logical link
 - Paragraphs doing more than one job
+
+**NLP methodology issues** *(activate when manuscript contains transformer models, text classification, or language model work)*
+- Model choice not justified (why BERT/RoBERTa over alternatives?)
+- Tokenisation strategy not described or potential issues not acknowledged
+- Train/validation/test split rationale missing or data leakage risk not addressed
+- No baseline comparisons (classical NLP methods: TF-IDF, LIWC, bag-of-words)
+- Evaluation metrics not justified for the task (e.g., r vs MAE for regression)
+- Hyperparameters, random seeds, and model versions not reported (reproducibility)
+- Fine-tuning vs frozen embeddings decision not explained
+
+**XAI / Interpretability issues** *(activate when Integrated Gradients, SHAP, attention, or other attribution methods are discussed)*
+- IG baseline choice (reference input) not justified — zero vector vs mask token vs mean embedding have different implications
+- Attribution results interpreted as psychological meaning without sanity checks
+- No faithfulness validation: are high-attribution tokens actually driving predictions?
+- No stability check: are attributions consistent across runs or input perturbations?
+- Overclaiming: token-level salience ≠ semantic importance ≠ psychological construct
+- No comparison to alternative XAI methods where relevant
+
+**Psychometric / measurement issues** *(activate when Big Five, OCEAN, personality scales, or psychometric instruments are discussed)*
+- Reliability of personality labels not reported (Cronbach's α, test-retest, inter-rater)
+- Convergent and discriminant validity of measures not addressed
+- OCEAN/Big Five operationalisation not theoretically justified (which facets, which instrument?)
+- Pennebaker essay paradigm used without acknowledging ecological validity limitations
+- Trait multicollinearity between Big Five dimensions not acknowledged
+- Continuous vs categorical treatment of traits not justified
+- Multiple comparisons (5 traits × N models) not corrected for
 
 ### Step 2 — Confirm scope
 
@@ -295,6 +325,8 @@ This connects the Thesis Review mode back to Draft and Edit modes for execution.
 
 These issues are surfaced proactively whenever detected, even if the user only asked for a narrow task:
 
+### General flags
+
 | Issue | Why it matters |
 |-------|---------------|
 | Causal language on correlational data | Reviewers will reject or request major revision |
@@ -303,6 +335,21 @@ These issues are surfaced proactively whenever detected, even if the user only a
 | Undefined abbreviations on first use | Style violation and readability issue |
 | Self-plagiarism risk (text close to prior work) | Flag for user to check, do not rewrite without instruction |
 | Missing limitations section | Nearly universal reviewer expectation |
+
+### Domain-specific flags (personality psychology + NLP)
+
+Raise these whenever the manuscript involves transformer models, personality measurement, or XAI:
+
+| Issue | Why it matters |
+|-------|---------------|
+| IG baseline not specified or justified | Reviewers familiar with XAI will flag this immediately; choice affects attribution values |
+| Attribution ≠ causation conflation | Claiming IG highlights "explain" personality is overclaiming — use "associated with" or "predictive of" |
+| No model reproducibility info (seed, version, hardware) | Required for replication; increasingly expected at PLOS ONE, Psych Methods |
+| Big Five labels from self-report treated as ground truth | Acknowledge measurement error in labels; discuss implications for model validity |
+| OCEAN traits analysed independently without acknowledging intercorrelations | N and E, O and C are correlated; inflated false positives across 5 models |
+| Pennebaker paradigm generalisation | Essays from forced introspection may not generalise to natural language; must be acknowledged |
+| Construct validity gap between NLP features and psychological constructs | Linguistic patterns predict scores ≠ linguistic patterns *are* personality; reviewers at EJPA/PAID will push back hard |
+| Effect sizes for NLP models not contextualised | r = .30 in personality prediction is meaningful; must be compared to established benchmarks (e.g., self-other agreement literature) |
 
 ---
 
